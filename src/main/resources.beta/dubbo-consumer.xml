@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="cactus" organization="TC"/>
+
+    <dubbo:registry id="qpt" address="${dev}" protocol="zookeeper" group="/qpt"/>
+
+    <dubbo:reference id="pressureTestService" interface="qunar.tc.qpt.service.PressureTestService" registry="qpt"
+                     version="1.0.0" timeout="50000" check="false"/>
+
+    <dubbo:registry id="self" address="${beta}" protocol="zookeeper" group="cactus"/>
+
+    <dubbo:service id="toNotifyService" interface="com.qunar.corp.cactus.service.NodeRelationService" registry="self"
+                   ref="nodeRelationService" version="1.0.0" timeout="3000" cluster="broadcast" />
+
+    <bean id="nodeRelationService" class="com.qunar.corp.cactus.service.impl.NodeRelationServiceImpl" />
+
+    <dubbo:reference id="notifyService" registry="self" interface="com.qunar.corp.cactus.service.NodeRelationService"
+                     version="1.0.0" cluster="broadcast" check="false" />
+</beans>

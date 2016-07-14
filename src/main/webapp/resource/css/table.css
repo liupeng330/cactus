@@ -1,0 +1,166 @@
+.text-align-center{
+    text-align: center;
+}
+
+.itemContent{
+    font-size: 13px;
+}
+
+.groupTitleField{
+    float: left;
+    margin-left: 3%;
+    width: 20%;
+}
+.serviceTitleField{
+    margin-left: 3%;
+    float: left;
+    width: 41%;;
+}
+
+.lastOperatorField{
+    float: left;
+    margin-left: 3%;
+    width: 30%;
+}
+
+.titleBg{
+    background: #f1f1f1;
+}
+.ver-align-middle{
+    vertical-align: middle !important;
+    padding-top: 2px;
+}
+
+.detailTr{
+    height: 40px;
+}
+
+.titleDiv {
+    float: left;
+    color: #999999;
+}
+
+.wrapTd{
+    word-wrap:break-word;
+    word-break:break-all;
+}
+
+
+.providerTd{
+    width:20%;
+}
+
+.appTd{
+    width:20%;
+}
+
+.serviceTd{
+    width:25%;
+}
+
+.operateTd{
+    width:35%;
+}
+
+.titleTd{
+    width:10%;
+}
+
+.title-15percent-td{
+    width: 15%;
+}
+
+.title-16percent-td{
+    width: 16%;
+}
+
+.dateTd{
+    width: 10%;
+}
+
+.logmsgTd{
+    width: 40%;
+}
+
+.usernameTd{
+    width:10%;
+}
+
+.logServiceTd{
+    width: 20%;
+}
+
+.groupTd{
+    width: 10%;
+}
+
+.hostnameTd{
+    width: 10%;
+}
+.td-5-percent{
+    width: 5% !important;
+}
+.td-10-percent{
+    width: 10% !important;
+}
+.td-15-percent{
+    width: 15% !important;
+}
+.td-20-percent{
+    width: 20% !important;
+}
+.td-25-percent{
+     width: 25% !important;
+ }
+.td-30-percent{
+    width: 30% !important;
+}
+.td-35-percent{
+    width: 35% !important;
+}
+.td-40-percent{
+    width: 40% !important;
+}
+.td-50-percent{
+    width: 50% !important;
+}
+.td-80-percent{
+    width: 80% !important;
+}
+.td-60-percent{
+    width: 60% !important;
+}
+.td-65-percent{
+    width: 65% !important;
+}
+.td-70-percent{
+    width: 70% !important;
+}
+table td{
+    vertical-align: middle !important;
+}
+
+.ulMenu{
+    min-width: 57px !important;
+    padding: 0 !important;
+    margin: 2px 0 0 !important;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 5px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: rgba(0,0,0,0.1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,0,0,0.4);
+}

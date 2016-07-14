@@ -1,0 +1,1 @@
+ALTER TABLE governance ADD INDEX idx_group_name_mid_path_service_name(group_name, mid_path, service_name);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:qconfig="http://www.qunar.com/schema/qconfig"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.qunar.com/schema/qconfig http://www.qunar.com/schema/qconfig.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config />
+
+    <qconfig:annotation-driven />
+
+	<context:component-scan base-package="com.qunar.corp.cactus.service" />
+    <context:component-scan base-package="com.qunar.corp.cactus.checker" />
+    <context:component-scan base-package="com.qunar.corp.cactus.support" />
+    <context:component-scan base-package="com.qunar.corp.cactus.event" />
+    <context:component-scan base-package="com.qunar.corp.cactus.drainage" />
+
+    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>
+    <bean id="beanPostProcessor" class="com.qunar.corp.cactus.event.EventBusRegisterBeanPostProcessor"/>
+    <bean id="urlChangeLogger" class="com.qunar.corp.cactus.event.impl.UrlChangeLogger"/>
+
+
+    <bean id="httpClient" class="qunar.hc.QunarAsyncClient">
+        <property name="allowPoolingConnection" value="true"/>
+        <property name="connectionTimeoutInMs" value="5000"/>
+        <property name="requestTimeoutInMs" value="5000"/>
+        <property name="compressionEnabled" value="true"/>
+    </bean>
+
+
+    <import resource="classpath:dubbo-consumer.xml"></import>
+    <import resource="classpath:qschedule.xml"></import>
+</beans>

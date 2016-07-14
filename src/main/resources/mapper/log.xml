@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="log">
+    <resultMap id="logResult" type="com.qunar.corp.cactus.bean.Log">
+        <id property="id" column="id"/>
+        <result property="message" column="msg"/>
+        <result property="group" column="app"/>
+        <result property="serviceGroup" column="service_group"/>
+        <result property="service" column="service"/>
+        <result property="version" column="version"/>
+        <result property="ip" column="ip"/>
+        <result property="port" column="port"/>
+        <result property="hostName" column="hostname"/>
+        <result property="operateTime" column="operate_time"/>
+        <association property="user" javaType="com.qunar.corp.cactus.bean.User">
+            <id property="id" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="role" column="role"/>
+        </association>
+        <association property="zkCluster" javaType="com.qunar.corp.cactus.bean.ZKCluster">
+            <id property="id" column="zk_id"/>
+            <result property="name" column="zkName"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+    <select id="select" parameterType="java.util.Map" resultMap="logResult">
+        <![CDATA[
+          select
+          A.id,
+          A.uid,
+          A.zk_id,
+          A.msg,
+          A.app,
+          A.service_group,
+          A.service,
+          A.version,
+          inet_ntoa(A.ip) as ip,
+          A.port,
+          A.hostname,
+          A.operate_time,
+          B.id,
+          B.username,
+          B.role,
+          zk.id,
+          zk.name as zkName,
+          zk.address
+          from ca_log A
+          inner join ca_user B on B.id=A.uid
+          left join zkcluster zk on zk.id=A.zk_id
+        ]]>
+        <where>
+            <if test="username!=null">
+                and B.username = #{username}
+            </if>
+            <if test="likeUsername!=null">
+                and B.username like CONCAT('%',#{likeUsername},'%')
+            </if>
+            <if test="zkName!=null">
+                and zk.name = #{zkName}
+            </if>
+            <if test="group!=null">
+                and A.app = #{group}
+            </if>
+            <if test="service!=null">
+                and A.service = #{service}
+            </if>
+            <if test="hostName!=null">
+                and A.hostname = #{hostName}
+            </if>
+            <if test="likeGroup!=null">
+                and A.app like CONCAT('%',#{likeGroup},'%')
+            </if>
+            <if test="likeService!=null">
+                and A.service like CONCAT('%',#{likeService},'%')
+            </if>
+            <if test="likeHostName!=null">
+                and A.hostname like CONCAT('%',#{likeHostName},'%')
+            </if>
+            <if test="fromTime!=null">
+                and A.operate_time>=#{fromTime}
+            </if>
+            <if test="toTime!=null">
+                and #{toTime} >= A.operate_time
+            </if>
+        </where>
+        order by operate_Time desc
+    </select>
+
+    <select id="selectCount" parameterType="java.util.Map" resultType="int">
+        <![CDATA[
+          select count(*)
+          from ca_log A
+          inner join ca_user B on B.id=A.uid
+          left join zkcluster zk on zk.id=A.zk_id
+        ]]>
+        <where>
+            <if test="username!=null">
+                B.username = #{username}
+            </if>
+            <if test="likeUsername!=null">
+                B.username like CONCAT('%',#{likeUsername},'%')
+            </if>
+            <if test="zkName!=null">
+                and zk.name = #{zkName}
+            </if>
+            <if test="zkId!=null">
+                and A.zk_id = #{zkId}
+            </if>
+            <if test="group!=null">
+                and A.app = #{group}
+            </if>
+            <if test="serviceGroup!=null">
+                and A.service_group = #{serviceGroup}
+            </if>
+            <if test="service!=null">
+                and A.service = #{service}
+            </if>
+            <if test="version!=null">
+                and A.version = #{version}
+            </if>
+            <if test="ip!=null">
+                and A.ip = inet_aton(#{ip})
+            </if>
+            <if test="port!=null">
+                and A.port = #{port}
+            </if>
+            <if test="hostName!=null">
+                and A.hostname = #{hostName}
+            </if>
+            <if test="likeGroup!=null">
+                and A.app like CONCAT('%',#{likeGroup},'%')
+            </if>
+            <if test="likeService!=null">
+                and A.service like CONCAT('%',#{likeService},'%')
+            </if>
+            <if test="likeHostName!=null">
+                and A.hostname like CONCAT('%',#{likeHostName},'%')
+            </if>
+            <if test="fromTime!=null">
+                and A.operate_time>=#{fromTime}
+            </if>
+            <if test="toTime!=null">
+                and #{toTime} >= A.operate_time
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.qunar.corp.cactus.bean.Log" keyProperty="id">
+        <![CDATA[
+            insert into ca_log (
+                uid,zk_id,app,service_group,service,version,ip,port,hostname,msg,operate_time
+            ) values (
+                #{user.id},#{zkCluster.id},#{group},#{serviceGroup},#{service},#{version},inet_aton(#{ip}),#{port},#{hostName},#{message},#{operateTime}
+            )
+        ]]>
+    </insert>
+
+    <update id="updateCactusApiLog" parameterType="com.qunar.corp.cactus.bean.Log">
+        update ca_log
+        set msg=#{message}, operate_time=now()
+        where app=#{group}
+        and service=#{service}
+        and zk_id=#{zkCluster.id}
+        and ip=inet_aton(#{ip})
+        and port=#{port}
+        and service_group=#{serviceGroup}
+        and version=#{version}
+        and uid=#{user.id}
+    </update>
+
+</mapper>
