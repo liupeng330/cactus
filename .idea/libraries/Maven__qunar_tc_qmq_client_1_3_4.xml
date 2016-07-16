@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: qunar.tc:qmq-client:1.3.4">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/qunar/tc/qmq-client/1.3.4/qmq-client-1.3.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/qunar/tc/qmq-client/1.3.4/qmq-client-1.3.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/qunar/tc/qmq-client/1.3.4/qmq-client-1.3.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
