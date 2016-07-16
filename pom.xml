@@ -11,12 +11,12 @@
 
     <properties>
         <org.springframework.version>3.2.4.RELEASE</org.springframework.version>
-        <qunar.common.version>8.2.2</qunar.common.version>
+        <qunar.common.version>8.2.3</qunar.common.version>
         <qconfig.version>1.0.8</qconfig.version>
         <org.apache.curator.version>2.2.0-incubating</org.apache.curator.version>
         <io.netty.version>3.9.2.Final</io.netty.version>
         <common.zookeeper.version>1.0.8</common.zookeeper.version>
-        <qmq.version>2.0.5</qmq.version>
+        <qmq.version>1.3.4</qmq.version>
         <org.slf4j.version>1.7.21</org.slf4j.version>
         <file_encoding>UTF-8</file_encoding>
     </properties>
@@ -395,6 +395,12 @@
             <version>1.1.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>qunar.common</groupId>
+            <artifactId>common-api</artifactId>
+            <version>8.2.3</version>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>com.qunar.security</groupId>-->
             <!--<artifactId>qsso-client</artifactId>-->
@@ -408,7 +414,7 @@
         <dependency>
             <groupId>qunar.base</groupId>
             <artifactId>meerkat-monitor</artifactId>
-            <version>2.1.0</version>
+            <version>1.3.9</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -421,7 +427,7 @@
         <dependency>
             <groupId>qunar.common</groupId>
             <artifactId>common-web</artifactId>
-            <version>${qunar.common.version}</version>
+            <version>8.1.9</version>
         </dependency>
 
         <dependency>
@@ -433,7 +439,7 @@
         <dependency>
             <groupId>qunar.tc.qschedule</groupId>
             <artifactId>qschedule-client</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

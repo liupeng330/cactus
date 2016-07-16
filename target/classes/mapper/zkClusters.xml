@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="zkCluster">
+    <select id="select" parameterType="java.util.Map" resultType="com.qunar.corp.cactus.bean.ZKCluster">
+        <![CDATA[
+          select id,
+          name,
+          address
+          from zkcluster
+        ]]>
+        <where>
+            <if test="address!=null">
+                and address=#{address}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.qunar.corp.cactus.bean.ZKCluster" keyProperty="id">
+        <![CDATA[
+
+
+            insert into zkcluster (
+                name, address
+            ) values (
+                #{name}, #{address}
+            )
+
+
+        ]]>
+    </insert>
+
+</mapper>

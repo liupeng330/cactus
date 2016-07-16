@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="specialGroup">
+
+    <select id="selectAll" resultType="java.lang.String">
+        <![CDATA[
+            select group_name from special_group
+        ]]>
+    </select>
+
+    <insert id="insert" parameterType="java.util.List">
+        <![CDATA[
+            insert ignore into special_group(
+                group_name
+            ) values
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item} )
+        </foreach>
+    </insert>
+
+
+
+    <delete id="clear" parameterType="java.util.List">
+        delete from special_group
+        where group_name in (
+        <foreach collection="list" item="item" index="index" separator="," >
+            #{item}
+        </foreach>
+        )
+    </delete>
+
+</mapper>

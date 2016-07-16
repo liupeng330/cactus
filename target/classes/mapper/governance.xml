@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="governance">
+    <resultMap id="governanceResult" type="com.qunar.corp.cactus.bean.GovernanceData">
+        <id property="id" column="id"/>
+        <result property="zkId" column="zk_id"/>
+        <result property="group" column="group_name"/>
+        <result property="serviceName" column="service_name"/>
+        <result property="serviceGroup" column="service_group"/>
+        <result property="version" column="version"/>
+        <result property="ip" column="ip_str"/>
+        <result property="port" column="port"/>
+        <result property="urlStr" column="url"/>
+        <result property="pathType" column="path_type"/>
+        <result property="lastOperator" column="last_operator"/>
+        <result property="status" column="status"/>
+        <result property="dataType" column="data_type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+    </resultMap>
+    <select id="select" parameterType="java.util.Map" resultMap="governanceResult">
+        <![CDATA[
+          select id,
+          zk_id,
+          name,
+          group_name,
+          service_name,
+          service_group,
+          version,
+          INET_NTOA(ip) as ip_str,
+          port,
+          url,
+          path_type,
+          last_operator,
+          status,
+          data_type,
+          create_time,
+          last_update_time
+          from governance
+        ]]>
+        <where>
+            <if test="id!=null and id!=0">
+                and id = #{id}
+            </if>
+            <if test="ids!=null">
+                and id in
+                <foreach collection="_parameter.get('ids')" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="group!=null">
+                and group_name = #{group}
+            </if>
+            <if test="likeGroup!=null">
+                and group_name like CONCAT(#{likeGroup},'%')
+            </if>
+            <if test="serviceName!=null">
+                and service_name = #{serviceName}
+            </if>
+            <if test="likeServiceName!=null">
+                and service_name like CONCAT('%',#{likeServiceName},'%')
+            </if>
+            <if test="zkId!=null and zkId!=0">
+                and zk_id = #{zkId}
+            </if>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+            <if test="ip!=null and ip!=''">
+                and ip = INET_ATON(#{ip})
+            </if>
+            <if test="port!=null and port!=0">
+                and port = #{port}
+            </if>
+            <if test="serviceGroup!=null">
+                and service_group = #{serviceGroup}
+            </if>
+            <if test="version!=null">
+                and version = #{version}
+            </if>
+            <if test="url!=null">
+                and url = #{url}
+            </if>
+            <if test="pathType!=null and pathType!=0">
+                and path_type = #{pathType}
+            </if>
+            <if test="lastOperator!=null">
+                and last_operator = #{lastOperator}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+            <if test="notStatus!=null">
+                and status != #{notStatus}
+            </if>
+            <if test="dataType!=null">
+                and data_type = #{dataType}
+            </if>
+            <if test="notDataType!=null">
+                and data_type != #{notDataType}
+            </if>
+            <if test="fromUpdateTime!=null">
+                and last_update_time >= #{fromUpdateTime}
+            </if>
+            <if test="toUpdateTime!=null">
+                and #{toUpdateTime} >= last_update_time
+            </if>
+            <if test="likeName!=null">
+                and name like CONCAT('%',#{likeName},'%')
+            </if>
+        </where>
+        order by last_update_time desc
+    </select>
+
+    <insert id="insert" parameterType="com.qunar.corp.cactus.bean.GovernanceData" keyProperty="id">
+        <![CDATA[
+
+            insert into governance (
+                id,
+                zk_id,
+                name,
+                group_name,
+                service_name,
+                service_group,
+                version,
+                ip,
+                port,
+                url,
+                path_type,
+                last_operator,
+                status,
+                data_type,
+                create_time
+            ) values
+                (null,#{zkId}, #{name}, #{group}, #{serviceName}, #{serviceGroup}, #{version},INET_ATON(#{ip}),#{port}, #{urlStr}, #{pathType}, #{lastOperator}, #{status}, #{dataType},
+                  null)
+        ]]>
+
+
+    </insert>
+    <update id="update" parameterType="com.qunar.corp.cactus.bean.GovernanceData">
+        <![CDATA[
+            update governance
+             ]]>
+        <set>
+            <!--<if test="zkId!=null">-->
+                <!--zk_id=#{zkId}-->
+            <!--</if>-->
+            <!--<if test="group!=null">-->
+                <!--group_name=#{group}-->
+            <!--</if>-->
+            <!--<if test="serviceName!=null">-->
+                <!--service_name=#{serviceName}-->
+            <!--</if>-->
+            <!--<if test="serviceGroup!=null">-->
+                <!--service_group=#{serviceGroup}-->
+            <!--</if>-->
+            <!--<if test="version!=null">-->
+                <!--version=#{version}-->
+            <!--</if>-->
+            <!--<if test="ip!=null">-->
+                <!--ip = INET_ATON(#{ip})-->
+            <!--</if>-->
+            <!--<if test="port!=null">-->
+                <!--port = #{port}-->
+            <!--</if>-->
+            <!--<if test="pathType!=null">-->
+                <!--path_type = #{pathType}-->
+            <!--</if>-->
+            <!--<if test="dataType!=null">-->
+                <!--data_type = #{dataType}-->
+            <!--</if>-->
+
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="urlStr!=null">
+                url = #{urlStr},
+            </if>
+            <if test="lastOperator!=null">
+                last_operator = #{lastOperator},
+            </if>
+        </set>
+        <where>
+                id=#{id}
+        </where>
+    </update>
+
+    <update id="updatePath" parameterType="com.qunar.corp.cactus.bean.GovernanceData">
+        <![CDATA[
+            update governance
+             ]]>
+        <set>
+            <if test="group!=null">
+                group_name=#{group},
+            </if>
+            <if test="lastUpdateTime!=null">
+                last_update_time=#{lastUpdateTime},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+</mapper>

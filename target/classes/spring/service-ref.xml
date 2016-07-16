@@ -1,0 +1,16 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:qconfig="http://www.qunar.com/schema/qconfig"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.qunar.com/schema/qconfig http://www.qunar.com/schema/qconfig.xsd">
+
+
+    <dubbo:registry id="tc_registry" address="${dubbocopy.zk}" protocol="zookeeper" group="dubbocopy"/>
+
+    <dubbo:reference registry="tc_registry" interface="qunar.tc.dubbocopy.api.service.RouterService"
+                     id="routerService" version="1.0.0" cluster="broadcast" check="false"/>
+
+</beans>
